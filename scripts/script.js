@@ -1,5 +1,5 @@
-playerScore = 0;
-computerScore = 0;
+var playerScore = 0;
+var computerScore = 0;
 // Computer picks move randomly
 let computerPlay = () => {
   // Chosses a random number between 1-3 to represent Rcok Paper and Scissors
@@ -14,13 +14,7 @@ let computerPlay = () => {
   }
 }
 // Prompts the player for choice
-let playerPlay = () => {
-  playerSelection = prompt("Choose 1.(R)ock, 2.(P)aper, 3.(S)cissors, or (Q)uit.").toLowerCase();
-  //if(playerSelection == 'q' || playerSelection == null) {
-  //  exit(1);
-  //}
-  return playerSelection;
-}
+let playerPlay = () => prompt("Choose 1.(R)ock, 2.(P)aper, 3.(S)cissors, or (Q)uit.").toLowerCase();
 
 let tie = () => "It's a tie!";
 let lose = () => "Oh No!";
