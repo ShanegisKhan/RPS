@@ -14,14 +14,6 @@ let computerPlay = () => {
     return 's';
   }
 }
-
-let buttons = document.querySelectorAll('button');
-let playerPlay = '';
-
-
-let tie = () => "It's a tie!";
-let lose = () => "Oh No!";
-let win = () => "VICTORY!";
 // Tracks, modifies, and displays the current score
 let score = (addPlayerScore, addComputerScore) => {
     playerScore += addPlayerScore;
@@ -31,46 +23,39 @@ let score = (addPlayerScore, addComputerScore) => {
 }
 // Plays a single round of RPS when called.
 let playRound = (playerSelection, computerSelection) => {
-/* Allower player to type full name of choice and converts it to
-   a single letter representation. */
-  if(playerSelection == 'rock') {
-    playerSelection = 'r';
-  } else if(playerSelection == 'paper') {
-    playerSelection = 'p';
-  } else if(playerSelection == 'scissors') {
-    playerSelection = 's';
-  } else if(playerSelection == 'q') {
-    return 'q';
-  }
+  let tie = "It's a tie!";
+  let lose =  "Oh No!";
+  let win =  "VICTORY!";
+  let messageBox = document.querySelector('#results');
   
-  if(playerSelection == 'r' || playerSelection == 1) {
+  if(playerSelection == 'rock' || playerSelection == 1) {
     if(computerSelection == 'r') {
-      document.querySelector('#results').textContent = tie() + " You both played Rock!" + score(0, 0);
+      messageBox.textContent = tie + " You both played Rock!" + score(0, 0);
     } else if(computerSelection == 'p') {
-      document.querySelector('#results').textContent = lose() + " Rock loses to Paper!" + score(0, 1);
+      messageBox.textContent = lose + " Rock loses to Paper!" + score(0, 1);
     } else { 
-      document.querySelector('#results').textContent = win() + " Rock beats Scissors!" + score(1, 0);
+      messageBox.textContent = win + " Rock beats Scissors!" + score(1, 0);
     }
-  } else if(playerSelection == 'p' || playerSelection == 2) {
+  } else if(playerSelection == 'paper' || playerSelection == 2) {
       if(computerSelection == 'r') {
-        document.querySelector('#results').textContent = win() + " Paper beats Rock!" + score(1, 0);
+        messageBox.textContent = win + " Paper beats Rock!" + score(1, 0);
       } else if(computerSelection == 'p') {
-        document.querySelector('#results').textContent = tie() + " You both played Paper!" + score(0, 0);
+        messageBox.textContent = tie + " You both played Paper!" + score(0, 0);
       } else if(computerSelection == 's') {
-        document.querySelector('#results').textContent = lose() + " Paper loses to Scissors!" + score(0, 1);
+        messageBox.textContent = lose + " Paper loses to Scissors!" + score(0, 1);
       }
-  } else if(playerSelection == 's' || playerSelection == 3) {
+  } else if(playerSelection == 'scissors' || playerSelection == 3) {
       if(computerSelection == 'r') {
-        document.querySelector('#results').textContent = lose() + " Rock beats Scissors!" + score(0, 1);
+        messageBox.textContent = lose + " Rock beats Scissors!" + score(0, 1);
       } else if(computerSelection == 'p') {
-        document.querySelector('#results').textContent = win() + " Scissors beat Paper!" + score(1, 0);
+        messageBox.textContent = win + " Scissors beat Paper!" + score(1, 0);
       } else if(computerSelection == 's') {
-        document.querySelector('#results').textContent = tie() + " You both played Scissors!" + score(0, 0);
+        messageBox.textContent = tie + " You both played Scissors!" + score(0, 0);
       }
   }
   if(playerScore >= winCondition || computerScore >= winCondition) {
-    const victoryMessage = () => document.querySelector('#results').textContent = `\n\nCongrats! You win!\nFINAL SCORES: You: ${playerScore} \nComputer: ${computerScore}`;
-    const loseMessage = () => document.querySelector('#results').textContent = `\n\nYou LOST!\nFINAL SCORES: You: ${playerScore} \nComputer: ${computerScore}`;
+    const victoryMessage = () => messageBox.textContent = `\n\nCongrats! You win!\nFINAL SCORES: You: ${playerScore} \nComputer: ${computerScore}`;
+    const loseMessage = () => messageBox.textContent = `\n\nYou LOST!\nFINAL SCORES: You: ${playerScore} \nComputer: ${computerScore}`;
     
     if(playerScore >= winCondition)  {
       victoryMessage();
@@ -82,6 +67,8 @@ let playRound = (playerSelection, computerSelection) => {
     computerScore = 0;
   }
 }
+let buttons = document.querySelectorAll('button');
+let playerPlay = '';
 
 buttons.forEach(button => button.addEventListener('click', () => {
   playerPlay = button.className;
