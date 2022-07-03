@@ -1,5 +1,6 @@
 var playerScore = 0;
 var computerScore = 0;
+const maxRounds = 5;
 // Computer picks move randomly
 let computerPlay = () => {
   // Chosses a random number between 1-3 to represent Rcok Paper and Scissors
@@ -13,8 +14,10 @@ let computerPlay = () => {
     return 's';
   }
 }
-// Prompts the player for choice
-let playerPlay = () => prompt("Choose 1.(R)ock, 2.(P)aper, 3.(S)cissors, or (Q)uit.").toLowerCase();
+
+let buttons = document.querySelectorAll('button');
+let playerPlay = '';
+
 
 let tie = () => "It's a tie!";
 let lose = () => "Oh No!";
@@ -39,41 +42,59 @@ let playRound = (playerSelection, computerSelection) => {
   } else if(playerSelection == 'q') {
     return 'q';
   }
-
+  
   if(playerSelection == 'r' || playerSelection == 1) {
     if(computerSelection == 'r') {
-      alert(tie() + " You both played Rock!" + score(0, 0));
+      // alert(tie() + " You both played Rock!" + score(0, 0));
+      document.querySelector('#results').textContent = tie() + " You both played Rock!" + score(0, 0);
     } else if(computerSelection == 'p') {
-      alert(lose() + " Rock loses to Paper!" + score(0, 1));
+      // alert(lose() + " Rock loses to Paper!" + score(0, 1));
+      document.querySelector('#results').textContent = lose() + " Rock loses to Paper!" + score(0, 1);
     } else {
-      alert(win() + " Rock beats Scissors!" + score(1, 0));
+      // alert(win() + " Rock beats Scissors!" + score(1, 0));
+      document.querySelector('#results').textContent = win() + " Rock beats Scissors!" + score(1, 0);
     }
   } else if(playerSelection == 'p' || playerSelection == 2) {
       if(computerSelection == 'r') {
-        alert(win() + " Paper beats Rock!" + score(1, 0));
+        // alert(win() + " Paper beats Rock!" + score(1, 0));
+        document.querySelector('#results').textContent = win() + " Paper beats Rock!" + score(1, 0);
       } else if(computerSelection == 'p') {
-        alert(tie() + " You both played Paper!" + score(0, 0));
+        // alert(tie() + " You both played Paper!" + score(0, 0));
+        document.querySelector('#results').textContent = tie() + " You both played Paper!" + score(0, 0);
       } else if(computerSelection == 's') {
-        alert(lose() + " Paper loses to Scissors!" + score(0, 1));
+        // alert(lose() + " Paper loses to Scissors!" + score(0, 1));
+        document.querySelector('#results').textContent = lose() + " Paper loses to Scissors!" + score(0, 1);
       }
   } else if(playerSelection == 's' || playerSelection == 3) {
       if(computerSelection == 'r') {
-        alert(lose() + " Rock beats Scissors!" + score(0, 1));
+        // alert(lose() + " Rock beats Scissors!" + score(0, 1));
+        document.querySelector('#results').textContent = lose() + " Rock beats Scissors!" + score(0, 1);
       } else if(computerSelection == 'p') {
-        alert(win() + " Scissors beat Paper!" + score(1, 0));
+        // alert(win() + " Scissors beat Paper!" + score(1, 0));
+        document.querySelector('#results').textContent = win() + " Scissors beat Paper!" + score(1, 0);
       } else if(computerSelection == 's') {
-        alert(tie() + " You both played Scissors!" + score(0, 0));
+        // alert(tie() + " You both played Scissors!" + score(0, 0));
+        document.querySelector('#results').textContent = tie() + " You both played Scissors!" + score(0, 0);
       }
   }
-}
-/* Defines the game loop. If the player selects 'q' the game quits,
-   otherwise it continues indefinitely */
-let game = () => {
-  while (true) {
-    if(playRound(playerPlay(), computerPlay()) == 'q') {
-      return 0;
+  if(playerScore >= maxRounds || computerScore >= maxRounds) {
+    const victoryMessage = () => document.querySelector('#results').textContent = `\n\nCongrats! You win!\nFINAL SCORES: You: ${playerScore} \nComputer: ${computerScore}`;
+    const loseMessage = () => document.querySelector('#results').textContent = `\n\nYou LOST!\nFINAL SCORES: You: ${playerScore} \nComputer: ${computerScore}`;
+    
+    if(playerScore >= maxRounds)  {
+      victoryMessage();
     }
+    if(computerScore >= maxRounds) {
+      loseMessage();
+    }
+    playerScore = 0;
+    computerScore = 0;
   }
 }
 
-game();
+buttons.forEach(button => button.addEventListener('click', () => {
+  playerPlay = button.className;
+  playRound(playerPlay, computerPlay());
+}));
+
+
